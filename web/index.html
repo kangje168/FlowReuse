@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#173f39"><title data-i18n="FlowReuse · AI workflow workspace">FlowReuse · AI workflow workspace</title>
+  <link rel="icon" href="/icon.svg" type="image/svg+xml"><link rel="stylesheet" href="/style.css">
+  <script src="/i18n.js" defer></script><script src="/app.js" defer></script>
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <a class="brand" href="/" aria-label="FlowReuse"><span class="brand-mark">f<span>r</span></span><span>FlowReuse<small data-i18n="Describe once. Reuse the work.">Describe once. Reuse the work.</small></span></a>
+    <div class="project-control"><span class="local-dot"></span><select id="project-select" aria-label="Project" data-i18n-aria="Project"></select><button class="button subtle" id="project-new" title="New project" data-i18n-title="New project">＋</button></div>
+    <button class="button subtle" id="export-skill" data-i18n="Export skill">Export skill</button>
+    <button class="button subtle" id="mobile-copilot">AI</button>
+    <select id="language-select" aria-label="Language" data-i18n-aria="Language"><option value="en">English</option><option value="fr">Français</option></select>
+    <button class="button subtle" id="help-button" data-i18n="Guide">Guide</button>
+  </header>
+  <aside class="library">
+    <div class="side-label" data-i18n="PROJECT WORKSPACE">PROJECT WORKSPACE</div>
+    <button class="nav-item active" id="editor-nav"><span>◈</span><span data-i18n="Workflow editor">Workflow editor</span></button>
+    <button class="nav-item" id="library-history"><span>▤</span><span data-i18n="Saved workflows">Saved workflows</span><span class="nav-count" id="saved-count">0</span></button>
+    <button class="nav-item" id="ai-settings"><span>✧</span><span data-i18n="Project AI">Project AI</span></button>
+    <div class="library-heading"><h2 data-i18n="Module library">Module library</h2><span class="pill" id="module-count">0</span></div>
+    <p class="muted small library-hint" data-i18n="AI connects them. You stay in control.">AI connects them. You stay in control.</p>
+    <select id="module-category" class="category-select" data-i18n-aria="Module category" aria-label="Module category"><option value="general" data-i18n="General modules">General modules</option><option value="example" data-i18n="Domain examples">Domain examples</option><option value="all" data-i18n="All modules">All modules</option></select>
+    <label class="search"><span>⌕</span><input id="module-search" type="search" placeholder="Search modules" data-i18n-placeholder="Search modules" aria-label="Search modules" data-i18n-aria="Search modules"></label>
+    <div id="module-list"></div>
+    <div class="reuse-card"><span class="eyebrow">BUILD ONCE. RUN AGAIN.</span><h3 data-i18n="AI plans. Code repeats.">AI plans. Code repeats.</h3><p data-i18n="Saved workflows execute without a model. Each skill invocation refreshes this project's reusable skill package.">Saved workflows execute without a model. Each skill invocation refreshes this project's reusable skill package.</p><span class="reuse-foot"><span class="local-dot"></span><span data-i18n="Project-scoped data and AI">Project-scoped data and AI</span></span></div>
+    <div class="sidebar-footer"><span class="status-dot"></span><span data-i18n="Local storage">Local storage</span><span>SQLite</span></div>
+  </aside>
+  <main class="workspace">
+    <section class="workflow-header"><div><div class="breadcrumb"><span data-i18n="Workflows">Workflows</span> / <span data-i18n="Editor">Editor</span></div><div class="title-row"><input id="workflow-name" aria-label="Workflow name" data-i18n-aria="Workflow name" maxlength="100" value="New workflow"><span id="save-status" class="save-status"></span></div></div><div class="workflow-actions"><button id="templates-button" class="button subtle" data-i18n="Examples">Examples</button><button id="new-button" class="button subtle" data-i18n="New">New</button><button id="save-button" class="button outline" data-i18n="Save version">Save version</button><button id="run-button" class="button primary">▶ <span data-i18n="Run workflow">Run workflow</span></button></div></section>
+    <div class="workspace-body"><section class="canvas-column">
+      <div class="canvas-toolbar"><div class="toolbar-label"><span class="local-dot"></span><span id="node-count"></span></div><div class="tool-actions"><button id="validate-button" data-i18n="Validate">Validate</button><button id="layout-button" data-i18n="Auto layout">Auto layout</button><button id="fit-button" data-i18n="Fit canvas">Fit canvas</button></div></div>
+      <div id="canvas" class="canvas" aria-label="Workflow canvas" data-i18n-aria="Workflow canvas" tabindex="0"><div class="canvas-caption"><span class="eyebrow">WORKFLOW CANVAS</span><span data-i18n="Describe your goal to the copilot. It builds the DAG.">Describe your goal to the copilot. It builds the DAG.</span></div><div id="world" class="world"><svg id="edges" class="edges" aria-label="Connections"></svg><div id="nodes"></div></div><div class="canvas-empty hidden" id="canvas-empty"><span>✧</span><h3 data-i18n="Start with a conversation">Start with a conversation</h3><p data-i18n="Tell the project AI what you need. Review the connected workflow here.">Tell the project AI what you need. Review the connected workflow here.</p></div><div id="connection-hint" class="connection-hint hidden"></div><div class="canvas-bottom"><span class="canvas-note" data-i18n="Drag modules to move · Drag background to pan">Drag modules to move · Drag background to pan</span><div class="zoom-controls"><button id="zoom-out" aria-label="Zoom out" data-i18n-aria="Zoom out">−</button><span id="zoom-label">100%</span><button id="zoom-in" aria-label="Zoom in" data-i18n-aria="Zoom in">＋</button></div></div></div>
+      <section class="run-panel"><div class="panel-tabs"><div role="tablist" aria-label="Execution panel"><button class="panel-tab active" role="tab" aria-selected="true" data-tab="result"><span data-i18n="Results">Results</span><span id="result-dot"></span></button><button class="panel-tab" role="tab" aria-selected="false" data-tab="input" data-i18n="Input">Input</button><button class="panel-tab" role="tab" aria-selected="false" data-tab="history" data-i18n="History">History</button></div><div class="execution-badge" id="execution-badge"></div></div><div id="result-content" class="panel-content"></div><div id="input-content" class="panel-content hidden"><div class="input-heading"><span data-i18n="Fresh input for each execution">Fresh input for each execution</span><button id="reset-input" class="text-button" data-i18n="Reset input">Reset input</button></div><textarea id="input-data" aria-label="Input JSON" data-i18n-aria="Input JSON" spellcheck="false"></textarea><div class="input-foot" data-i18n="JSON object, array, text or number · Stored only in this project">JSON object, array, text or number · Stored only in this project</div></div><div id="history-content" class="panel-content hidden"></div></section>
+    </section><aside class="inspector">
+      <div class="inspector-header inspector-tabs"><button class="active" id="copilot-tab" data-i18n="AI copilot">AI copilot</button><button id="details-tab" data-i18n="Module details">Module details</button><button id="inspector-close" aria-label="Close" data-i18n-aria="Close">×</button></div>
+      <section id="copilot-pane" class="copilot-pane"><button id="profile-chip" class="profile-chip"></button><div id="chat-messages" class="chat-messages" aria-live="polite"></div><form id="chat-form" class="chat-form"><label class="sr-only" for="chat-input" data-i18n="Describe your workflow">Describe your workflow</label><textarea id="chat-input" rows="3" maxlength="8000" placeholder="Describe your workflow…" data-i18n-placeholder="Describe your workflow…"></textarea><div class="chat-actions"><span data-i18n="Build first. Run when ready.">Build first. Run when ready.</span><button id="chat-send" type="submit" class="button primary" data-i18n="Send">Send</button></div><div class="skill-status" id="skill-status"></div></form></section>
+      <div id="inspector-content" class="hidden"></div>
+    </aside></div>
+  </main>
+</div>
+<div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+<dialog id="modal"><div class="modal-header"><h2 id="modal-title"></h2><button id="modal-close" aria-label="Close" data-i18n-aria="Close">×</button></div><div id="modal-content"></div></dialog>
+</body>
+</html>

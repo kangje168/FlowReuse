@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:flowreuse:skill:1.0",
+  "title": "FlowReuse project skill manifest",
+  "type": "object",
+  "required": ["format", "format_version", "generation", "generated_at", "project", "invocation", "ai", "execution", "modules", "workflows"],
+  "properties": {
+    "format": {"const": "flowreuse.skill"},
+    "format_version": {"const": "1.0"},
+    "generation": {"type": "string", "pattern": "^[a-f0-9]{32}$"},
+    "generated_at": {"type": "string", "format": "date-time"},
+    "project": {"type": "object", "required": ["id", "name"]},
+    "invocation": {"type": "string"},
+    "ai": {"type": "object", "properties": {"provider": {"type": ["string", "null"]}, "model": {"type": ["string", "null"]}}},
+    "execution": {"type": "object", "required": ["model_calls_on_success", "arbitrary_code_execution", "retry"]},
+    "modules": {"type": "array", "items": {"type": "object", "required": ["id", "version", "hash", "input", "output", "defaults", "fields"]}},
+    "workflows": {"type": "array", "items": {"type": "object", "required": ["workflow_id", "revision_id", "number", "nodes"]}}
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,5 @@
+[
+  {"id": "ORD-1001", "amount": 299, "customer": "Customer A"},
+  {"id": "ORD-1002", "amount": 1280, "customer": "Customer B"},
+  {"id": "ORD-1003", "amount": 89.9, "customer": "Customer C"}
+]
